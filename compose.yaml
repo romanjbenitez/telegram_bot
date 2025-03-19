@@ -1,0 +1,9 @@
+services:
+  postgres:
+    image: 'postgres:latest'
+    environment:
+      - 'POSTGRES_DB=finances'
+      - 'POSTGRES_PASSWORD=q'
+      - 'POSTGRES_USER=admin'
+    ports:
+      - '5432'
