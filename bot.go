@@ -7,6 +7,8 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"telegram_bot/Config"
+	_ "telegram_bot/Config"
 )
 
 var (
@@ -58,13 +60,10 @@ func handleMessage(message *tgbotapi.Message) {
 		err = handleCommand(message.Chat.ID, text)
 	} else if screaming && len(text) > 0 {
 		msg := tgbotapi.NewMessage(message.Chat.ID, strings.ToUpper(text))
-		// To preserve markdown, we attach entities (bold, italic..)
 		msg.Entities = message.Entities
 		_, err = bot.Send(msg)
 	} else {
-		// This is equivalent to forwarding, without the sender's name
-		copyMsg := tgbotapi.NewCopyMessage(message.Chat.ID, message.Chat.ID, message.MessageID)
-		_, err = bot.CopyMessage(copyMsg)
+		go Config.HandleVoiceMessage(bot, message)
 	}
 
 	if err != nil {

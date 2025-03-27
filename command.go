@@ -1,6 +1,9 @@
 package main
 
-import "log"
+import (
+	"log"
+	"telegram_bot/Config"
+)
 
 const (
 	INGRESO = "/ingreso"
@@ -9,5 +12,5 @@ const (
 
 func egresoCommand() {
 	log.Printf("cargo")
-	getConnectionString()
+	Config.GetConnection()
 }
